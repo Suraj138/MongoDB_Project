@@ -1,0 +1,497 @@
+mongosh> show dbs
+admin           40.00 KiB
+config          72.00 KiB
+db_test1        40.00 KiB
+local           72.00 KiB
+mongoworkshop  112.00 KiB
+movies          72.00 KiB
+student         88.00 KiB
+test           112.00 KiB
+workshop        56.00 KiB
+mongosh> use ecommerce
+switched to db ecommerce
+ecommerce> db.createCollection(
+... "customer"
+... )
+{ ok: 1 }
+ecommerce> show collections
+customer
+
+ecommerce> db.createCollection("customers");
+{ ok: 1 }
+ecommerce> show collections
+customers
+ecommerce> db.customers.insertMany([{
+... name:"Suraj Kumar",
+... address:"Barmasia Salona",
+... email:"Ksuraj138@gmail.com",
+... age:28,
+... },
+... {
+... name:"Sagarika Komal",
+... address:"Bhopal",
+... email:"saga05kumari@gmail.com",
+... age:26,
+... },
+... {
+... name:"Pankaj Singh",
+... address:"Ranchi",
+... email:"singh123@gmail.com",
+... age:25,
+... },
+... {
+... name:"Ram Kapoor",
+... address:"Mumbai",
+... email:"ramkap22@gmail.com",
+... age:32,
+... },
+... {
+... name:"Deepak Kumar",
+... address:"salona tand",
+... email:"deepakkumar@gmail.com",
+... age:19,
+... },
+... {
+... name:"Shashi Kumar",
+... address:"Benguluru",
+... email:"shashi09@gmail.com",
+... age:22,
+... }])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId("63886c48090a6a13e3bd79ce"),
+    '1': ObjectId("63886c48090a6a13e3bd79cf"),
+    '2': ObjectId("63886c48090a6a13e3bd79d0"),
+    '3': ObjectId("63886c48090a6a13e3bd79d1"),
+    '4': ObjectId("63886c48090a6a13e3bd79d2"),
+    '5': ObjectId("63886c48090a6a13e3bd79d3")
+  }
+}
+ecommerce> db.customers.find().pretty()
+[
+  {
+    _id: ObjectId("63886c48090a6a13e3bd79ce"),
+    name: 'Suraj Kumar',
+    address: 'Barmasia Salona',
+    email: 'Ksuraj138@gmail.com',
+    age: 28
+  },
+  {
+    _id: ObjectId("63886c48090a6a13e3bd79cf"),
+    name: 'Sagarika Komal',
+    address: 'Bhopal',
+    email: 'saga05kumari@gmail.com',
+    age: 26
+  },
+  {
+    _id: ObjectId("63886c48090a6a13e3bd79d0"),
+    name: 'Pankaj Singh',
+    address: 'Ranchi',
+    email: 'singh123@gmail.com',
+    age: 25
+  },
+  {
+    _id: ObjectId("63886c48090a6a13e3bd79d1"),
+    name: 'Ram Kapoor',
+    address: 'Mumbai',
+    email: 'ramkap22@gmail.com',
+    age: 32
+  },
+  {
+    _id: ObjectId("63886c48090a6a13e3bd79d2"),
+    name: 'Deepak Kumar',
+    address: 'salona tand',
+    email: 'deepakkumar@gmail.com',
+    age: 19
+  },
+  {
+    _id: ObjectId("63886c48090a6a13e3bd79d3"),
+    name: 'Shashi Kumar',
+    address: 'Benguluru',
+    email: 'shashi09@gmail.com',
+    age: 22
+  }
+]
+
+{
+    _id: ObjectId("63831e595690c773c6d2e6da"),
+    type: [ 'Normal', 'premium' ]
+  }
+]
+)
+
+ecommerce> db.customers.find({
+... "type":"Normal"});
+[
+  {
+    _id: ObjectId("63831e595690c773c6d2e6da"),
+    type: [ 'Normal', 'premium' ]
+  }
+]
+ecommerce> db.customers.find({ "type": "premium"});
+[
+  {
+    _id: ObjectId("63831e595690c773c6d2e6da"),
+    type: [ 'Noram', 'premium' ]
+  }
+]
+
+ecommerce> db.createCollection("products");
+{ ok: 1 }
+ecommerce> show collections
+products
+ecommerce> db.products.insertMany([
+... {
+... name:"Quartz-watch",
+... price:19.99,
+... category:"Category One"
+... },
+... {name:"Boat Earphone",
+... price:500,
+... category:"Category Two"
+... },
+... {
+... name:"Shoes",
+... price:700,
+... category:"Category Three"
+... }
+... ]
+... );
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId("6383216a5690c773c6d2e6db"),
+    '1': ObjectId("6383216a5690c773c6d2e6dc"),
+    '2': ObjectId("6383216a5690c773c6d2e6dd")
+  }
+}
+ecommerce> db.products.find().pretty()
+[
+  {
+    _id: ObjectId("6383216a5690c773c6d2e6db"),
+    name: 'Quartz-watch',
+    price: 19.99,
+    category: 'Category One'
+  },
+  {
+    _id: ObjectId("6383216a5690c773c6d2e6dc"),
+    name: 'Boat Earphone',
+    price: 500,
+    category: 'Category Two'
+  },
+  {
+    _id: ObjectId("6383216a5690c773c6d2e6dd"),
+    name: 'Shoes',
+    price: 700,
+    category: 'Category Three'
+  }
+]
+
+db.cart.insertMany([
+{
+_id: 1,
+cart_item_qty: 2,
+product_id: 102,
+customer_id: 1
+},
+{
+_id: 2,
+cart_item_qty: 1,
+product_id: 201,
+customer_id: 2
+},
+{
+_id: 3,
+cart_item_qty: 1,
+product_id: 202,
+customer_id: 3
+}
+,
+{
+_id: 4,
+cart_item_qty: 1,
+product_id: 501,
+customer_id: 2
+}
+,
+{
+_id: 5,
+cart_item_qty: 1,
+product_id: 401,
+customer_id: 3
+}
+]);
+
+db.categories.insertMany([
+{
+_id:1,
+categroy_name: 'Home Applicances',
+},
+{
+_id:2,
+categroy_name: 'Computers, Laptop and Mobiles',
+sub_categories: ['Computers', 'Laptops', 'Mobiles']
+},
+{
+_id:3,
+categroy_name: 'Books',
+sub_categories: ['Fiction', 'Biography', 'Fantacy Fiction','Non Fiction']
+},
+{
+_id:4,
+categroy_name: 'Fasion',
+sub_categories: ['mens', 'womens']
+},
+{
+_id:5,
+categroy_name: 'Games and Consoles',
+sub_categories: ['titles', 'console']
+}
+]);
+
+db.products.insertMany([
+{
+_id:1,
+product_name: 'Laptop',
+product_model: 'C201',
+product_brand: 'HP',
+product_segments: ['Computers', 'Laptops'],
+product_cost: 100000,
+categroy_name: 'Computers, Laptop and Mobiles'
+},
+{
+_id:2,
+product_name: 'Smart Phone',
+product_model: 'C202',
+product_brand: 'Google',
+product_segments: ['Mobile', 'Android'],
+product_cost: 60000,
+categroy_name: 'Computers, Laptop and Mobiles'
+},
+{
+_id:3,
+product_name: 'Lord of the Rings',
+product_model: 'C501',
+product_segments: ['Book', 'Novels'],
+product_cost: 1500,
+categroy_name: 'Books'
+},
+{
+_id:4,
+product_name: 'Pokemon Scarlet',
+product_model: 'C701',
+product_segments: ['pokemon', 'gen9'],
+product_cost: 4500,
+categroy_name: 'Games and Consoles'
+},
+{
+_id:5,
+product_name: 'Home Applien',
+product_model: 'C702',
+product_segments: ['kittechen Set'],
+product_cost: 30000,
+categroy_name: 'Kitchen Items'
+},
+]);
+
+db.orders.insertMany([
+{
+_id: 1,
+product_name: 'Home Applien',
+customer_id: 1,
+order_qty: 1,
+order_status: 'Delivered',
+order_date: new Date('2022-11-15')
+},
+{
+_id: 2,
+product_name: 'Pokemon Scarlet',
+customer_id: 2,
+order_qty: 2,
+order_status: 'Dispatched',
+order_date: new Date('2022-11-27')
+},
+{
+_id: 3,
+product_name: 'Lord of the Rings',
+customer_id: 3,
+order_qty: 1,
+order_status: 'Delivered',
+order_date: new Date('2022-11-10')
+},
+{
+_id: 4,
+product_name: 'Smart Phone',
+customer_id: 1,
+order_qty: 1,
+order_status: 'cancelled',
+order_date: new Date('2022-11-18')
+},
+{
+_id: 5,
+product_name: 'Laptop',
+customer_id: 1,
+order_qty: 1,
+order_status: 'Dispatched',
+order_date: new Date('2022-11-01')
+}
+]);
+
+db.seller.insertMany([
+{
+_id: 1,
+seller_name: 'Sundar Rathi',
+seller_business: 'Gada Electronics',
+seller_mobileno: 4567891230,
+seller_address: 'Andheri',
+seller_city: 'Mumbai'
+
+},
+{
+_id: 2,
+seller_name: 'Ankur Kumar',
+seller_business: 'ABC Sports and Fasion',
+seller_mobileno: 7890123456,
+seller_address: 'Connaught Place',
+seller_city: 'Delhi'
+}
+]);
+
+db.catlog.insertMany([
+{
+seller_name: 'Sundar Rathi',
+product_name: 'Smart Phone',
+product_qty: 10,
+},
+{
+seller_name: 'Krishna Lap Care',
+product_name: 'Laptop',
+product_qty: 5,
+},
+{
+seller_name: 'Ankur Kumar',
+product_name: 'Bike Center',
+product_qty: 20,
+},
+{
+seller_name: 'Ankur Kumar',
+product_name: 'Home Applien',
+product_qty: 15,
+}
+]);
+
+db.orders.insert(
+   [
+     {
+       product_id: 1,
+       status: "completed",
+       quantity: 5
+     },
+     {
+       product_id: 2,
+       status: "in progress",
+       quantity: 10
+     },
+     {
+       product_id: 3,
+       status: "cancelled",
+       quantity: 15
+     },
+     {
+       product_id: 4,
+       status: "completed",
+       quantity: 20
+     }
+   ]
+)
+db.orders.find(
+  { status: "pending" },
+  {
+    $set: {
+      status: "fulfilled",
+    },
+  }
+);
+
+db.orders.aggregate(
+
+[
+
+{
+
+ $lookup:
+
+ {
+
+   from: "customers",
+
+   localField: "customer_id",
+
+   foreignField: "_id",
+
+   as: "customer_info"
+
+ }
+
+},
+
+{
+
+ $project:
+
+  {
+
+    "shipping_details": "$shipping_details",
+
+    "billing_info": "$billing_info",
+
+    "customer_info": "$customer_info"
+
+  }
+}
+])
+
+db.orders.find(
+{"$or": [
+{"shipping.details": {"$exists": true}},
+{"billing.information": {"$exists": true}}
+]});
+
+db.sellers.insertMany([
+  {
+    name: "John Doe",
+    email: "johndoe@example.com",
+    password: "123456",
+    address: "123 Main Street",
+    city: "New York",
+    state: "NY",
+    zip: "10001"
+  },	
+  {
+    name: "Jane Smith",
+    email: "janesmith@example.com",
+    password: "123456",
+    address: "456 Main Street",
+    city: "Los Angeles",
+    state: "CA",
+    zip: "90001"
+  }
+])
+
+QUESTIONS:-
+Ans:- 1
+db.products.aggregate([{$group:{_id:'product_cost', avg:{$avg:'$product_cost'}}}])
+
+Ans:- 2
+db.customers.aggregate([{$sort: {purchase_amount:-1}])
+
+Ans:- 3
+db.order.aggregate([{$group:{_id:'Total_cost', sum:{$sum:'$product_cost'}}}])
+
+Ans:- 4
+db.customers.aggregate([{$group:{_id:'customer_city', {$match:{customer_city}}}])
+
+Ans:- 5
+db.orders.aggregate([{$match: {"customer.city": {$eq: "Seller.city"}}},
+{$group:{_id: "$seller",totalProducts: {$sum: "$items.quantity"}}},{$sort: {totalProducts: -1}}])
